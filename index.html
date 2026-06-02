@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#9e1b1b">
 <style>
+  /* 样式与之前完全相同，为节省篇幅略去，实际完整代码中会保留全部样式 */
   :root{
     --red:#9e1b1b;
     --red-deep:#7a1414;
@@ -23,9 +25,7 @@
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
-
   html{scroll-behavior:smooth;}
-
   body{
     font-family:var(--sans);
     background:var(--cream);
@@ -34,10 +34,7 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-
   img{display:block;}
-
-  /* ============ 顶部导航 ============ */
   .topbar{
     position:sticky;
     top:0;
@@ -84,8 +81,6 @@
     transition:.25s;
   }
   .navlinks a:hover{color:var(--red);background:rgba(200,161,90,.16);}
-
-  /* ============ 封面 ============ */
   .hero{
     position:relative;
     min-height:100svh;
@@ -100,12 +95,9 @@
   .hero-bg{
     position:absolute;
     inset:0;
-    background:
-      linear-gradient(rgba(60,15,12,.34),rgba(60,15,12,.5)),
-      url('images/20260602125054_65_4816.jpg');
     background-size:cover;
     background-position:center 32%;
-    transform:scale(1.04);
+    transition:background-image 0.2s ease;
   }
   .hero-content{
     position:relative;
@@ -149,8 +141,6 @@
     font-family:var(--serif);
   }
   .hero .date b{color:var(--gold-light);font-weight:600;}
-
-  /* 倒计时 */
   .countdown{
     margin-top:1.7rem;
     display:flex;
@@ -186,7 +176,6 @@
     color:var(--gold-light);
     letter-spacing:.1em;
   }
-
   .scroll-cue{
     position:absolute;
     left:50%;
@@ -200,14 +189,10 @@
     animation:bob 2.4s ease-in-out infinite;
   }
   .scroll-cue .arrow{display:block;margin-top:.4rem;font-size:1.1rem;}
-
   @keyframes rise{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
   @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
-
-  /* ============ 序言 ============ */
   .intro{
-    background:
-      radial-gradient(120% 100% at 50% 0%,#fff 0%,var(--cream) 60%);
+    background:radial-gradient(120% 100% at 50% 0%,#fff 0%,var(--cream) 60%);
     text-align:center;
     padding:clamp(3rem,8vw,5.5rem) 1.4rem;
   }
@@ -240,12 +225,8 @@
     color:var(--red);
     letter-spacing:.1em;
   }
-
-  /* ============ 通用容器 / 标题 ============ */
   .container{max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,1.6rem);}
-
   section[id]{scroll-margin-top:70px;}
-
   .section-head{text-align:center;margin:clamp(3rem,7vw,4.6rem) 0 clamp(1.6rem,4vw,2.4rem);}
   .section-head .kicker{
     display:block;
@@ -276,11 +257,8 @@
   .section-head .note{
     margin-top:.9rem;color:var(--ink-soft);font-size:.92rem;letter-spacing:.05em;
   }
-
-  /* ============ 瀑布流相册 ============ */
   .masonry{column-gap:clamp(12px,2vw,20px);}
   .gallery{columns:clamp(220px,30vw,260px);}
-
   .card{
     break-inside:avoid;
     margin-bottom:clamp(12px,2vw,20px);
@@ -307,8 +285,6 @@
   .card:hover{transform:translateY(-5px);box-shadow:0 20px 38px rgba(120,40,20,.18);}
   .card:hover img{transform:scale(1.05);}
   .card:hover::after{border-color:rgba(200,161,90,.85);box-shadow:inset 0 0 0 4px rgba(255,255,255,.5);}
-
-  /* ============ 前世今生 ============ */
   .pairs{columns:clamp(280px,40vw,360px);column-gap:clamp(16px,3vw,28px);}
   .pair{
     break-inside:avoid;
@@ -360,8 +336,6 @@
     content:"";position:absolute;left:8%;right:8%;top:50%;height:1px;
     background:linear-gradient(90deg,transparent,var(--gold),transparent);
   }
-
-  /* ============ 结婚证 ============ */
   .cert-wrap{display:flex;justify-content:center;padding-bottom:.5rem;}
   .cert{
     max-width:560px;width:100%;
@@ -378,12 +352,8 @@
     font-family:var(--kai);color:var(--red);letter-spacing:.16em;font-size:1.05rem;
     background:linear-gradient(180deg,#fff,#fdf6ea);
   }
-
-  /* ============ 进场动画 ============ */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
   .reveal.in{opacity:1;transform:none;}
-
-  /* ============ 页脚 ============ */
   footer{
     margin-top:clamp(3rem,8vw,5rem);
     background:var(--red);
@@ -395,8 +365,6 @@
   footer .nm{font-family:var(--kai);font-size:1.4rem;letter-spacing:.1em;}
   footer .dt{margin-top:.5rem;letter-spacing:.18em;opacity:.9;font-family:var(--serif);}
   footer .cr{margin-top:1.3rem;font-size:.78rem;opacity:.65;letter-spacing:.08em;}
-
-  /* ============ 灯箱 ============ */
   .lightbox{
     position:fixed;inset:0;z-index:100;
     display:flex;align-items:center;justify-content:center;
@@ -444,12 +412,10 @@
   .lb-nav:hover{transform:translateY(-50%) scale(1.08);}
   .lb-prev{left:1rem;}
   .lb-next{right:1rem;}
-
   @media (max-width:480px){
     .countdown{max-width:268px;margin-left:auto;margin-right:auto;gap:.7rem;}
     .cd-cell{flex:1 1 calc(50% - .7rem);min-width:0;}
   }
-
   @media (max-width:560px){
     .lb-nav{width:42px;height:42px;font-size:1.6rem;}
     .lb-prev{left:.5rem;}.lb-next{right:.5rem;}
@@ -463,7 +429,6 @@
 </head>
 <body>
 
-<!-- 顶部导航 -->
 <nav class="topbar">
   <div class="topbar-inner">
     <span class="brand">郑尧&nbsp;<span class="h">❤</span>&nbsp;黄梦婷</span>
@@ -477,15 +442,13 @@
   </div>
 </nav>
 
-<!-- 封面 -->
 <header class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg" id="heroBg"></div>
   <div class="hero-content">
     <div class="kicker">We Are Getting Married</div>
     <h1 class="names">郑尧<span class="amp">&amp;</span>黄梦婷</h1>
     <div class="tagline">一生一世 · 一期一会</div>
     <div class="date">婚期 · <b>2026 / 10 / 04</b></div>
-
     <div class="countdown" id="countdown">
       <div class="cd-cell"><div class="cd-num" id="cd-days">--</div><div class="cd-label">DAYS 天</div></div>
       <div class="cd-cell"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">HOURS 时</div></div>
@@ -497,7 +460,6 @@
   <div class="scroll-cue">向下浏览<span class="arrow">⌄</span></div>
 </header>
 
-<!-- 序言 -->
 <section class="intro">
   <div class="seal">囍</div>
   <p>从一抹红妆，到十里白纱，<br>我们把同一个姿势，留在了前世与今生。</p>
@@ -506,8 +468,6 @@
 </section>
 
 <main class="container">
-
-  <!-- 前世今生 -->
   <section id="pastlife">
     <div class="section-head reveal">
       <span class="kicker">Past Life &amp; Present Life</span>
@@ -517,8 +477,6 @@
     </div>
     <div class="pairs masonry" id="pairsGrid"></div>
   </section>
-
-  <!-- 明制汉服 -->
   <section id="hanfu">
     <div class="section-head reveal">
       <span class="kicker">Crimson Vow</span>
@@ -528,8 +486,6 @@
     </div>
     <div class="gallery masonry" id="hanfuGrid"></div>
   </section>
-
-  <!-- 婚纱 -->
   <section id="dress">
     <div class="section-head reveal">
       <span class="kicker">Forever in White</span>
@@ -539,8 +495,6 @@
     </div>
     <div class="gallery masonry" id="dressGrid"></div>
   </section>
-
-  <!-- 外景 -->
   <section id="scene">
     <div class="section-head reveal">
       <span class="kicker">Sunlit Moments</span>
@@ -550,8 +504,6 @@
     </div>
     <div class="gallery masonry" id="sceneGrid"></div>
   </section>
-
-  <!-- 结婚证 -->
   <section id="cert">
     <div class="section-head reveal">
       <span class="kicker">Hand in Hand</span>
@@ -561,7 +513,6 @@
     </div>
     <div class="cert-wrap reveal" id="certWrap"></div>
   </section>
-
 </main>
 
 <footer>
@@ -571,7 +522,6 @@
   <div class="cr">© 2026 郑尧 &amp; 黄梦婷 · 爱与光影同驻，纪念我们的专属时空</div>
 </footer>
 
-<!-- 灯箱 -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <button class="lb-btn lb-close" id="lbClose" aria-label="关闭">×</button>
   <button class="lb-btn lb-nav lb-prev" id="lbPrev" aria-label="上一张">‹</button>
@@ -584,7 +534,48 @@
 (function(){
   "use strict";
 
-  // ===== 图片数据（修改图片只需改这里） =====
+  // ---------- 图片映射：ID -> 缩略图URL（您提供的新链接）----------
+  const THUMB_MAP = {
+    "20260602124752_40_4816": "https://img-reg-ab.imagency.cn/e/d00f389fb874ae6a82aab8ae787c1906.png",
+    "20260602124802_41_4816": "https://img-reg-ab.imagency.cn/e/1225f67e4485a8b8cf904ea73ea157da.png",
+    "20260602124811_42_4816": "https://img-reg-ab.imagency.cn/e/f76d533200f289fd10b42c8060f56473.png",
+    "20260602124819_43_4816": "https://img-reg-ab.imagency.cn/e/190e10f789dc7c988255e3dead2cd8f3.png",
+    "20260602124827_44_4816": "https://img-reg-ab.imagency.cn/e/1488acdcd0ee39241bae2135b838d347.png",
+    "20260602124836_45_4816": "https://img-reg-ab.imagency.cn/e/da79d12dbc909bb66891e2956a4a79bd.png",
+    "20260602124845_46_4816": "https://img-reg-ab.imagency.cn/e/ff89d92f5fcd52d4b37ef62bcfada211.png",
+    "20260602124853_47_4816": "https://img-reg-ab.imagency.cn/e/e6506fe6191d389189d8e5a10a226c48.png",
+    "20260602124900_48_4816": "https://img-reg-ab.imagency.cn/e/a4b76343174a5401938b373c6b41bf17.png",
+    "20260602124904_49_4816": "https://img-reg-ab.imagency.cn/e/be2da9003152e467165055d04069ecb2.png",
+    "20260602124908_50_4816": "https://img-reg-ab.imagency.cn/e/55a77de66473ceb636c4b7e97b77a822.png",
+    "20260602124914_51_4816": "https://img-reg-ab.imagency.cn/e/7d6118c0822d9f25c107c157086abafe.png",
+    "20260602124918_52_4816": "https://img-reg-ab.imagency.cn/e/d840ab64eb4fe7510fad6c60c5495e2a.png",
+    "20260602124922_53_4816": "https://img-reg-ab.imagency.cn/e/06b6d2ff2b9b9cc70bfa3771a5371022.png",
+    "20260602124927_54_4816": "https://img-reg-ab.imagency.cn/e/db9e4b0ea17b3b180ebae577d7d405a6.png",
+    "20260602124932_55_4816": "https://img-reg-ab.imagency.cn/e/94e9aa9e69f71f4e7434daa0bca2b0c7.png",
+    "20260602124937_56_4816": "https://img-reg-ab.imagency.cn/e/bca6788c4eb30bf856622fd81b31421c.png",
+    "20260602124946_57_4816": "https://img-reg-ab.imagency.cn/e/98c1853db5a3b55996244306697bf195.png",
+    "20260602124952_58_4816": "https://img-reg-ab.imagency.cn/e/6e9c7d8d8721a3290dcff417239a459c.png",
+    "20260602125001_59_4816": "https://img-reg-ab.imagency.cn/e/4de7de58ba11fb6d3f935f89456e5cf1.png",
+    "20260602125005_60_4816": "https://img-reg-ab.imagency.cn/e/3bdb7c566120a28bdc63a4a679166956.png",
+    "20260602125012_61_4816": "https://img-reg-ab.imagency.cn/e/66b081e2377fe52a0c928a8d1d0cb265.png",
+    "20260602125020_62_4816": "https://img-reg-ab.imagency.cn/e/1966a03ebec68579c78b96d539a1c230.png",
+    "20260602125028_63_4816": "https://img-reg-ab.imagency.cn/e/bef1f2985967ea7f1417e28d22a95bb7.png",
+    "20260602125041_64_4816": "https://img-reg-ab.imagency.cn/e/98df7c1b836411db008b4c0ca505e485.png",
+    "20260602125054_65_4816": "https://img-reg-ab.imagency.cn/e/a43829b5e519e580cd4cde6010588f47.png",
+    "20260602125105_66_4816": "https://img-reg-ab.imagency.cn/e/a1e100c1bd2cbe8a784ba5156111b2af.png"
+  };
+
+  // 获取缩略图（网格显示） → 使用您提供的新链接
+  function getThumbUrl(id) {
+    return THUMB_MAP[id] || ("pic/" + id + ".png"); // fallback
+  }
+
+  // 获取原图（灯箱大图）→ 保持原链接 images/xxx.jpg
+  function getFullUrl(id) {
+    return "images/" + id + ".jpg";
+  }
+
+  // 图片数据数组
   var HANFU = [
     "20260602124752_40_4816","20260602124802_41_4816","20260602124811_42_4816",
     "20260602124819_43_4816","20260602124827_44_4816","20260602124836_45_4816",
@@ -600,8 +591,7 @@
     "20260602125012_61_4816","20260602125020_62_4816","20260602125028_63_4816",
     "20260602125041_64_4816","20260602125054_65_4816","20260602125105_66_4816"
   ];
-  var CERT = "20260602125005_60_4816";
-  // 前世今生：[明制汉服, 婚纱]
+  var CERT_ID = "20260602125005_60_4816";
   var PAIRS = [
     ["20260602124811_42_4816","20260602124900_48_4816"],
     ["20260602124819_43_4816","20260602124904_49_4816"],
@@ -611,14 +601,12 @@
     ["20260602124853_47_4816","20260602124922_53_4816"]
   ];
 
-  var thumb = function(id){ return "pic/" + id + ".png"; };
-  var full  = function(id){ return "images/" + id + ".jpg"; };
-
-  // 每个画廊维护一个灯箱可浏览的列表
   var GROUPS = {};
-  function makeImg(id, alt){
+
+  // 创建 img 元素（缩略图使用 thumb url）
+  function makeThumbImg(id, alt){
     var im = document.createElement("img");
-    im.src = thumb(id);
+    im.src = getThumbUrl(id);
     im.loading = "lazy";
     im.alt = alt || "郑尧与黄梦婷婚纱照";
     return im;
@@ -631,97 +619,92 @@
     ids.forEach(function(id, i){
       var card = document.createElement("figure");
       card.className = "card";
-      card.appendChild(makeImg(id, groupName + " 第" + (i+1) + "张"));
+      card.appendChild(makeThumbImg(id, groupName + " 第" + (i+1) + "张"));
       card.addEventListener("click", (function(idx){
         return function(){ openLightbox(groupKey, idx); };
       })(i));
       grid.appendChild(card);
-      list.push({ id:id, caption: groupName + " · " + (i+1) + " / " + ids.length });
+      list.push({ id: id, caption: groupName + " · " + (i+1) + " / " + ids.length });
     });
     GROUPS[groupKey] = list;
   }
 
-  // 渲染前世今生
+  // 渲染前世今生（也用缩略图）
   function renderPairs(){
     var grid = document.getElementById("pairsGrid");
-    var cn = ["壹","贰","叁","肆","伍","陆","柒","捌"];
+    var cn = ["壹","贰","叁","肆","伍","陆"];
     var list = [];
     PAIRS.forEach(function(pair, i){
       var wrap = document.createElement("div");
       wrap.className = "pair";
-
       var no = document.createElement("span");
       no.className = "pair-no";
       no.textContent = cn[i] || (i+1);
       wrap.appendChild(no);
 
-      // 前世（汉服）
       var top = document.createElement("figure");
       top.className = "pair-photo";
       var t1 = document.createElement("span");
       t1.className = "pair-tag past"; t1.textContent = "前世 · 红妆";
       top.appendChild(t1);
-      top.appendChild(makeImg(pair[0], "前世·红妆 第" + (i+1) + "对"));
+      top.appendChild(makeThumbImg(pair[0], "前世·红妆 第" + (i+1) + "对"));
       var idxPast = list.length;
-      list.push({ id:pair[0], caption:"前世今生 · 第" + (i+1) + "对 · 前世红妆" });
+      list.push({ id: pair[0], caption: "前世今生 · 第" + (i+1) + "对 · 前世红妆" });
       top.addEventListener("click", (function(idx){ return function(){ openLightbox("pastlife", idx); }; })(idxPast));
       wrap.appendChild(top);
 
-      // 连接符
       var link = document.createElement("div");
       link.className = "pair-link";
       link.innerHTML = "<span>缘 ❤ 定</span>";
       wrap.appendChild(link);
 
-      // 今生（婚纱）
       var bot = document.createElement("figure");
       bot.className = "pair-photo";
       var t2 = document.createElement("span");
       t2.className = "pair-tag now"; t2.textContent = "今生 · 白纱";
       bot.appendChild(t2);
-      bot.appendChild(makeImg(pair[1], "今生·白纱 第" + (i+1) + "对"));
+      bot.appendChild(makeThumbImg(pair[1], "今生·白纱 第" + (i+1) + "对"));
       var idxNow = list.length;
-      list.push({ id:pair[1], caption:"前世今生 · 第" + (i+1) + "对 · 今生白纱" });
+      list.push({ id: pair[1], caption: "前世今生 · 第" + (i+1) + "对 · 今生白纱" });
       bot.addEventListener("click", (function(idx){ return function(){ openLightbox("pastlife", idx); }; })(idxNow));
       wrap.appendChild(bot);
-
       grid.appendChild(wrap);
     });
     GROUPS["pastlife"] = list;
   }
 
-  // 渲染结婚证
+  // 结婚证（缩略图用新链接）
   function renderCert(){
     var wrap = document.getElementById("certWrap");
     var box = document.createElement("div");
     box.className = "cert";
-    box.appendChild(makeImg(CERT, "郑尧与黄梦婷 结婚登记证件照"));
+    box.appendChild(makeThumbImg(CERT_ID, "郑尧与黄梦婷 结婚登记证件照"));
     var cap = document.createElement("div");
     cap.className = "cap";
     cap.textContent = "一寸合影 · 余生为约";
     box.appendChild(cap);
     box.addEventListener("click", function(){ openLightbox("cert", 0); });
     wrap.appendChild(box);
-    GROUPS["cert"] = [{ id:CERT, caption:"执手为证 · 一寸合影，将印上我们的结婚证" }];
+    GROUPS["cert"] = [{ id: CERT_ID, caption: "执手为证 · 一寸合影，将印上我们的结婚证" }];
   }
 
-  // ===== 灯箱 =====
+  // ========== 灯箱 ==========
   var lb = document.getElementById("lightbox");
   var lbImg = document.getElementById("lbImg");
   var lbCap = document.getElementById("lbCaption");
-  var cur = { group:null, index:0 };
+  var cur = { group: null, index: 0 };
 
   function showCurrent(){
     var list = GROUPS[cur.group];
     if(!list) return;
     var item = list[cur.index];
-    lbImg.src = full(item.id);
+    // 关键：灯箱大图使用 getFullUrl (原 images/xxx.jpg)
+    lbImg.src = getFullUrl(item.id);
     lbImg.alt = item.caption;
     lbCap.textContent = item.caption;
-    // 预加载相邻图片
     var len = list.length;
     [ (cur.index+1)%len, (cur.index-1+len)%len ].forEach(function(n){
-      var pre = new Image(); pre.src = full(list[n].id);
+      var pre = new Image(); pre.src = getFullUrl(list[n].id);
     });
   }
 
@@ -754,7 +737,6 @@
     else if(e.key === "ArrowLeft") step(-1);
     else if(e.key === "ArrowRight") step(1);
   });
-  // 移动端滑动
   var tx = 0;
   lb.addEventListener("touchstart", function(e){ tx = e.changedTouches[0].clientX; }, {passive:true});
   lb.addEventListener("touchend", function(e){
@@ -762,8 +744,8 @@
     if(Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
   }, {passive:true});
 
-  // ===== 倒计时 =====
-  var WEDDING = new Date(2026, 9, 4, 0, 0, 0); // 月份从0开始，9 = 十月
+  // ========== 倒计时 ==========
+  var WEDDING = new Date(2026, 9, 4, 0, 0, 0);
   function pad(n){ return (n<10?"0":"") + n; }
   function tick(){
     var diff = Math.floor((WEDDING - new Date())/1000);
@@ -781,7 +763,7 @@
     }
   }
 
-  // ===== 进场动画 =====
+  // ========== 进场动画 ==========
   function initReveal(){
     var els = document.querySelectorAll(".reveal");
     if(!("IntersectionObserver" in window)){
@@ -796,7 +778,18 @@
     els.forEach(function(el){ io.observe(el); });
   }
 
-  // ===== 初始化 =====
+  // ========== 封面背景图使用新链接（作为展示，也可改用原图，按需） ==========
+  function setHeroBackground() {
+    const heroBg = document.getElementById("heroBg");
+    if (heroBg && THUMB_MAP["20260602125054_65_4816"]) {
+      const bgUrl = THUMB_MAP["20260602125054_65_4816"];
+      heroBg.style.background = `linear-gradient(rgba(60,15,12,.34), rgba(60,15,12,.5)), url("${bgUrl}")`;
+      heroBg.style.backgroundSize = "cover";
+      heroBg.style.backgroundPosition = "center 32%";
+    }
+  }
+
+  // ========== 初始化 ==========
   renderPairs();
   renderGallery("hanfuGrid", HANFU, "hanfu", "红妆华裳");
   renderGallery("dressGrid", DRESS, "dress", "白首之约");
@@ -805,8 +798,9 @@
   initReveal();
   tick();
   setInterval(tick, 1000);
+  setHeroBackground();
 
-  window.openLightbox = openLightbox; // 方便调试
+  window.openLightbox = openLightbox;
 })();
 </script>
 </body>
