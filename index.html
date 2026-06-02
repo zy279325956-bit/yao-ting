@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>我们の故事 · 婚纱照纪念网站</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Georgia', '宋体', 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+    background: #faf7f2;
+    color: #2c3e2f;
+    line-height: 1.6;
+  }
+
+  /* 主容器 */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* 头部大图区域 */
+  .hero {
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
+                url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center 40%;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 0 0 40px 40px;
+  }
+
+  .hero h1 {
+    color: white;
+    font-size: 3.8rem;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    font-weight: 400;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    letter-spacing: 1px;
+  }
+
+  /* 标题样式 */
+  .section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin: 3rem 0 2rem;
+    position: relative;
+  }
+  .section-title:after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: #d4b88c;
+    margin: 12px auto 0;
+  }
+
+  /* 照片墙网格 */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 2rem;
+  }
+
+  .photo-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .photo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+  }
+  .photo-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-card .desc {
+    padding: 0.8rem;
+    font-size: 0.85rem;
+    color: #5a6e57;
+    text-align: center;
+    background: white;
+  }
+
+  /* 横版双栏说明（相识故事） */
+  .story {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    background: #fff8f0;
+    border-radius: 32px;
+    padding: 2.5rem;
+    margin: 3rem 0;
+    align-items: center;
+  }
+  .story-img {
+    flex: 1;
+    min-width: 200px;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .story-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .story-text {
+    flex: 1.2;
+  }
+  .story-text h3 {
+    font-size: 1.8rem;
+    color: #b4835a;
+    margin-bottom: 1rem;
+  }
+
+  /* 页脚 */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: #8faa8a;
+    border-top: 1px solid #e7dfd3;
+    margin-top: 4rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2.4rem; }
+    .section-title { font-size: 1.8rem; }
+    .story { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 大封面 -->
+<div class="hero">
+  <div>
+    <h1>❤️ 郑尧 ❤️ 黄梦婷</h1>
+    <p>—— 我们的光影诗篇 · 一生一期一会 ——</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 婚纱照画廊 -->
+  <h2 class="section-title">📸 怦然心动 · 婚纱时刻</h2>
+  <div class="gallery" id="galleryGrid">
+    <!-- 照片会由 JavaScript 动态生成，方便你日后直接添加图片 -->
+  </div>
+
+  <!-- 相识/恋爱故事板块（可选） -->
+  <div class="story">
+    <div class="story-img">
+      <!-- 换成你们的写真/生活照 -->
+      <img src="https://images.unsplash.com/photo-1522673607200-0fa1416df3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="我们日常">
+    </div>
+    <div class="story-text">
+      <h3>✨ 我们的故事 · 从初见到余生</h3>
+      <p>我们在春天相逢，在夏天的晚风中约定同行。每一次快门按下，都是时光赠予的温柔。这个小小的网站，装着我们最珍视的瞬间——从婚纱照到婚礼日，从海边的晚霞到冬日的炉火。希望点开这里的你，也能感受到那份甜蜜与笃定。🎎</p>
+      <p style="margin-top:1rem">—— 杨幂 & 刘恺威 ——</p>
+    </div>
+  </div>
+
+  <!-- 访客祝福/留言区（静态示例，你可以改成表单） -->
+  <h2 class="section-title">💌 你的一句祝福 · 我们长久的珍藏</h2>
+  <div style="background:#fff4e6; border-radius: 32px; padding: 1.5rem 2rem; margin-top: 2rem;">
+    <p style="font-style:italic; color:#6f4e37;">✨ “看到你们的每一帧都像电影海报，祝百年好合～” —— 小小豆芽</p>
+    <p style="font-style:italic; color:#6f4e37; margin-top: 0.8rem;">✨ “从校园到婚纱，要一直幸福呀！” —— 北城以北</p>
+    <p style="font-style:italic; color:#6f4e37; margin-top: 0.8rem;">✨ “摄影也太有感觉了，是爱情最美好的模样💍” —— LiviaChen</p>
+    <div style="margin-top: 1.5rem; text-align: center;">
+      <input type="text" placeholder="留下你对我们的祝福..." style="padding: 10px 15px; width: 70%; border-radius: 40px; border: 1px solid #dccfbc; background: white;">
+      <button style="background:#d4b88c; border:none; padding: 10px 20px; border-radius: 40px; margin-left: 10px; color:white; font-weight:bold;">送祝福</button>
+    </div>
+    <p style="font-size: 0.7rem; text-align: center; margin-top: 1rem;">❤️ 所有祝福都会出现在这里，成为我们永恒的记忆❤️</p>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 杨幂 & 刘恺威 · 爱与光影同驻 | 纪念我们的专属时空</p>
+</footer>
+
+<script>
+  // 这里存放你在婚纱照图床上传后的图片链接（建议先用占位图片测试）
+  // 你只需要把下方的图片替换成你的婚纱照链接即可，多张照片会自动生成照片墙！
+  const photos = [
+    {
+      url: "https://images.unsplash.com/photo-1508807526341-0e8b33d8c93a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "💖 初见 · 花海白纱"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1511285560929-80b456feaadc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "🌅 黄昏下 · 牵手约定"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1609344121317-32d4f4d4c9a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "🏰 欧式古堡 · 王子公主"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1522673607200-0fa1416df3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "☕️ 日常碎片 · 温柔岁月"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "💍 交换誓言 · 永恒一刹"
+    }
+  ];
+
+  const galleryDiv = document.getElementById("galleryGrid");
+
+  function buildGallery() {
+    galleryDiv.innerHTML = "";
+    for (let i = 0; i < photos.length; i++) {
+      const p = photos[i];
+      const card = document.createElement("div");
+      card.className = "photo-card";
+      // 可选：点击放大功能 （简单提醒）
+      card.onclick = () => alert("💕 点击查看原图：" + p.description);
+      const img = document.createElement("img");
+      img.src = p.url;
+      img.alt = p.description;
+      const descDiv = document.createElement("div");
+      descDiv.className = "desc";
+      descDiv.innerText = p.description;
+      card.appendChild(img);
+      card.appendChild(descDiv);
+      galleryDiv.appendChild(card);
+    }
+  }
+
+  buildGallery();
+</script>
+</body>
+</html>
