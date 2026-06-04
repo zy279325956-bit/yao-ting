@@ -151,8 +151,16 @@
   .hero .date b{color:var(--gold-light);font-weight:600;}
 
   /* 倒计时 */
-  .countdown{
+  .cd-title{
     margin-top:1.7rem;
+    font-family:var(--kai);
+    font-size:clamp(1rem,3.2vw,1.2rem);
+    letter-spacing:.2em;
+    color:var(--gold-light);
+    text-shadow:0 2px 10px rgba(0,0,0,.35);
+  }
+  .countdown{
+    margin-top:.8rem;
     display:flex;
     justify-content:center;
     gap:clamp(.6rem,2.4vw,1.3rem);
@@ -406,13 +414,48 @@
     padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
   }
   .lightbox.open{opacity:1;visibility:visible;}
-  .lb-img{
+  /* 大图秒显：模糊打底层(缩略图) + 高清层(预览→原图) + 加载转圈 */
+  .lb-stage{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    line-height:0;
+  }
+  .lb-blur{                       /* 占位并决定画面尺寸：已缓存的缩略图，瞬间显示 */
+    display:block;
     max-width:92vw;max-height:84vh;
     width:auto;height:auto;
     border-radius:8px;
-    box-shadow:0 20px 60px rgba(0,0,0,.6);
-    animation:lbpop .35s ease;
+    filter:blur(15px) saturate(1.07);
+    transform:scale(1.03);
   }
+  .lb-img{                        /* 高清层：覆盖在模糊层之上，加载完成后淡入 */
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:contain;
+    border-radius:8px;
+    box-shadow:0 20px 60px rgba(0,0,0,.6);
+    opacity:0;
+    transition:opacity .45s ease;
+  }
+  .lb-img.show{opacity:1;}
+  .lb-spin{
+    position:absolute;top:50%;left:50%;
+    width:44px;height:44px;margin:-22px 0 0 -22px;
+    border-radius:50%;
+    border:3px solid rgba(231,207,149,.25);
+    border-top-color:var(--gold-light);
+    animation:lbspin .8s linear infinite;
+    opacity:0;transition:opacity .25s;pointer-events:none;
+  }
+  .lb-spin.show{opacity:1;}
+  .lb-hd{
+    position:absolute;left:50%;bottom:-2.1rem;transform:translateX(-50%);
+    font-size:.74rem;letter-spacing:.12em;color:#e7cf95;opacity:0;
+    font-family:var(--serif);white-space:nowrap;transition:opacity .25s;
+    pointer-events:none;
+  }
+  .lb-hd.show{opacity:.85;}
+  @keyframes lbspin{to{transform:rotate(360deg);}}
   @keyframes lbpop{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:none;}}
   .lb-caption{
     position:absolute;bottom:max(1.1rem,env(safe-area-inset-bottom));
@@ -459,6 +502,72 @@
   @media (max-width:380px){
     .navlinks a{padding:.32rem .55rem;font-size:.86rem;}
   }
+
+  /* ============ 图片加载失败占位（自动重试 3 次后） ============ */
+  .load-failed{position:relative;min-height:120px;background:linear-gradient(135deg,#f3e9d6,#fbf7ef);}
+  .load-failed img{visibility:hidden;}
+  .load-failed::after{
+    content:"图片加载失败 ⟳";
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#a98b6a;font-size:.85rem;font-family:var(--serif);letter-spacing:.1em;
+  }
+
+  /* ============ 悬浮音乐播放器（电脑 + 手机适配） ============ */
+  .player{
+    position:fixed;
+    right:max(1rem,env(safe-area-inset-right));
+    bottom:max(1rem,env(safe-area-inset-bottom));
+    z-index:60;
+    display:flex;align-items:center;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .player-disc{
+    width:58px;height:58px;border-radius:50%;
+    border:none;cursor:pointer;flex:none;padding:0;
+    position:relative;
+    background:radial-gradient(circle at 50% 50%,
+      #fff 0 7%,var(--red) 8% 15%,#5a0f0f 16% 20%,var(--red-deep) 21% 100%);
+    box-shadow:0 8px 22px rgba(120,20,20,.4),inset 0 0 0 2px rgba(231,207,149,.55);
+    display:flex;align-items:center;justify-content:center;
+    animation:spin 9s linear infinite;
+    animation-play-state:paused;
+    transition:transform .25s;
+  }
+  .player.playing .player-disc{animation-play-state:running;}
+  .player-disc:hover{transform:scale(1.06);}
+  .player-disc::after{                 /* 唱片高光 */
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.45),transparent 42%);
+    pointer-events:none;
+  }
+  .player-icon{
+    position:relative;z-index:2;color:var(--gold-light);
+    font-size:1.05rem;line-height:1;letter-spacing:.04em;
+    text-shadow:0 1px 3px rgba(0,0,0,.55);
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .player-tip{
+    position:absolute;right:70px;top:50%;transform:translateY(-50%) translateX(8px);
+    white-space:nowrap;max-width:62vw;overflow:hidden;text-overflow:ellipsis;
+    background:rgba(40,10,10,.86);color:#f7e7cf;
+    font-family:var(--serif);font-size:.82rem;letter-spacing:.05em;
+    padding:.4rem .85rem;border-radius:999px;
+    border:1px solid rgba(231,207,149,.4);
+    box-shadow:0 6px 18px rgba(0,0,0,.28);
+    opacity:0;pointer-events:none;
+    transition:opacity .3s,transform .3s;
+  }
+  .player-tip.show,.player:hover .player-tip{
+    opacity:1;transform:translateY(-50%) translateX(0);
+  }
+  @media (max-width:560px){
+    .player-disc{width:50px;height:50px;}
+    .player-icon{font-size:.95rem;}
+    .player-tip{right:60px;font-size:.78rem;max-width:58vw;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .player .player-disc{animation:none;}
+  }
 </style>
 </head>
 <body>
@@ -484,8 +593,9 @@
     <div class="kicker">We Are Getting Married</div>
     <h1 class="names">郑尧<span class="amp">&amp;</span>黄梦婷</h1>
     <div class="tagline">一生一世 · 一期一会</div>
-    <div class="date">婚期 · <b>2026 / 10 / 04</b></div>
+    <div class="date" id="heroDate">婚期 · <b>2026 / 10 / 04 · 11:58</b></div>
 
+    <div class="cd-title" id="cd-title">距离我们的婚礼还有</div>
     <div class="countdown" id="countdown">
       <div class="cd-cell"><div class="cd-num" id="cd-days">--</div><div class="cd-label">DAYS 天</div></div>
       <div class="cd-cell"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">HOURS 时</div></div>
@@ -571,11 +681,24 @@
   <div class="cr">© 2026 郑尧 &amp; 黄梦婷 · 爱与光影同驻，纪念我们的专属时空</div>
 </footer>
 
+<!-- 悬浮音乐播放器 -->
+<div class="player" id="player" title="背景音乐">
+  <span class="player-tip" id="playerTip"></span>
+  <button class="player-disc" id="playerDisc" type="button" aria-label="播放音乐">
+    <span class="player-icon" id="playerIcon">►</span>
+  </button>
+</div>
+
 <!-- 灯箱 -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <button class="lb-btn lb-close" id="lbClose" aria-label="关闭">×</button>
   <button class="lb-btn lb-nav lb-prev" id="lbPrev" aria-label="上一张">‹</button>
-  <img class="lb-img" id="lbImg" src="" alt="婚纱照大图">
+  <div class="lb-stage" id="lbStage">
+    <img class="lb-blur" id="lbBlur" alt="" aria-hidden="true">
+    <img class="lb-img" id="lbImg" src="" alt="婚纱照大图">
+    <div class="lb-spin" id="lbSpin"></div>
+    <div class="lb-hd" id="lbHd">高清原图加载中…</div>
+  </div>
   <button class="lb-btn lb-nav lb-next" id="lbNext" aria-label="下一张">›</button>
   <div class="lb-caption" id="lbCaption"></div>
 </div>
@@ -611,16 +734,44 @@
     ["20260602124853_47_4816","20260602124922_53_4816"]
   ];
 
-  var thumb = function(id){ return "pic/" + id + ".png"; };
-  var full  = function(id){ return "images/" + id + ".jpg"; };
+  var thumb   = function(id){ return "pic/" + id + ".png"; };
+  var preview = function(id){ return "preview/" + id + ".jpg"; };
+  var full    = function(id){ return "images/" + id + ".jpg"; };
+
+  // 加载失败自动重试：最多 tries 次，指数退避，重试时加参数绕过浏览器缓存
+  function loadWithRetry(target, src, tries, onload, onerror){
+    tries = tries || 3;
+    var n = 0;
+    function attempt(){
+      n++;
+      target.onload = function(){
+        target.onload = target.onerror = null;
+        if(onload) onload(target);
+      };
+      target.onerror = function(){
+        if(n < tries){
+          setTimeout(attempt, 300 * n);          // 退避 300ms / 600ms …
+        } else {
+          target.onload = target.onerror = null;
+          if(onerror) onerror(target);
+        }
+      };
+      target.src = (n === 1) ? src
+        : src + (src.indexOf("?") < 0 ? "?" : "&") + "retry=" + n + "-" + Date.now();
+    }
+    attempt();
+  }
 
   // 每个画廊维护一个灯箱可浏览的列表
   var GROUPS = {};
   function makeImg(id, alt){
     var im = document.createElement("img");
-    im.src = thumb(id);
     im.loading = "lazy";
     im.alt = alt || "郑尧与黄梦婷婚纱照";
+    loadWithRetry(im, thumb(id), 3, null, function(t){
+      var box = t.closest(".card,.pair-photo,.cert");
+      if(box) box.classList.add("load-failed");
+    });
     return im;
   }
 
@@ -708,20 +859,65 @@
   // ===== 灯箱 =====
   var lb = document.getElementById("lightbox");
   var lbImg = document.getElementById("lbImg");
+  var lbBlur = document.getElementById("lbBlur");
+  var lbSpin = document.getElementById("lbSpin");
+  var lbHd = document.getElementById("lbHd");
   var lbCap = document.getElementById("lbCaption");
   var cur = { group:null, index:0 };
+  var lbToken = 0;
 
   function showCurrent(){
     var list = GROUPS[cur.group];
     if(!list) return;
     var item = list[cur.index];
-    lbImg.src = full(item.id);
-    lbImg.alt = item.caption;
+    var my = ++lbToken;                       // 防止快速切换时旧图片覆盖新图片
+
     lbCap.textContent = item.caption;
-    // 预加载相邻图片
+    lbImg.alt = item.caption;
+
+    // 1) 模糊打底：用已缓存的缩略图瞬间铺满，决定画面尺寸
+    lbBlur.src = thumb(item.id);
+    // 2) 复位高清层，显示加载转圈
+    lbImg.classList.remove("show");
+    lbHd.classList.remove("show");
+    lbHd.textContent = "高清原图加载中…";
+    lbSpin.classList.add("show");
+
+    // 3) 先载入中等预览图（约 1920px、几百 KB），秒出清晰画面
+    loadWithRetry(lbImg, preview(item.id), 3, function(){
+      if(my !== lbToken) return;
+      lbImg.classList.add("show");
+      lbSpin.classList.remove("show");
+      // 4) 后台载入全分辨率原图，完成后无缝替换（画质分辨率不变）
+      lbHd.classList.add("show");
+      var hi = new Image();
+      loadWithRetry(hi, full(item.id), 3, function(){
+        if(my !== lbToken) return;
+        lbImg.src = hi.src;                   // 原图已在缓存，瞬间替换
+        lbHd.classList.remove("show");
+      }, function(){
+        if(my !== lbToken) return;
+        lbHd.classList.remove("show");        // 原图失败也无妨，预览图已在显示
+      });
+    }, function(){
+      if(my !== lbToken) return;
+      // 预览图加载失败：直接退回加载原图
+      loadWithRetry(lbImg, full(item.id), 3, function(){
+        if(my !== lbToken) return;
+        lbImg.classList.add("show");
+        lbSpin.classList.remove("show");
+      }, function(){
+        if(my !== lbToken) return;
+        lbSpin.classList.remove("show");
+        lbHd.textContent = "图片加载失败，请检查网络后重试";
+        lbHd.classList.add("show");
+      });
+    });
+
+    // 预加载相邻预览图（轻量），让左右切换更顺滑
     var len = list.length;
     [ (cur.index+1)%len, (cur.index-1+len)%len ].forEach(function(n){
-      var pre = new Image(); pre.src = full(list[n].id);
+      var pre = new Image(); pre.src = preview(list[n].id);
     });
   }
 
@@ -747,7 +943,9 @@
   document.getElementById("lbClose").addEventListener("click", closeLightbox);
   document.getElementById("lbPrev").addEventListener("click", function(e){ e.stopPropagation(); step(-1); });
   document.getElementById("lbNext").addEventListener("click", function(e){ e.stopPropagation(); step(1); });
-  lb.addEventListener("click", function(e){ if(e.target === lb || e.target === lbImg) closeLightbox(); });
+  lb.addEventListener("click", function(e){
+    if(e.target === lb || e.target === lbImg || e.target === lbBlur || e.target.id === "lbStage") closeLightbox();
+  });
   document.addEventListener("keydown", function(e){
     if(!lb.classList.contains("open")) return;
     if(e.key === "Escape") closeLightbox();
@@ -762,22 +960,41 @@
     if(Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
   }, {passive:true});
 
-  // ===== 倒计时 =====
-  var WEDDING = new Date(2026, 9, 4, 0, 0, 0); // 月份从0开始，9 = 十月
+  // ===== 倒计时 / 正计时 =====
+  var WEDDING = new Date(2026, 9, 4, 11, 58, 0); // 2026/10/04 11:58（月份从0开始，9=十月）
+  var cdMode = "";
   function pad(n){ return (n<10?"0":"") + n; }
+  function fillCells(total){
+    document.getElementById("cd-days").textContent  = Math.floor(total/86400);
+    document.getElementById("cd-hours").textContent = pad(Math.floor(total%86400/3600));
+    document.getElementById("cd-mins").textContent  = pad(Math.floor(total%3600/60));
+    document.getElementById("cd-secs").textContent  = pad(total%60);
+  }
   function tick(){
     var diff = Math.floor((WEDDING - new Date())/1000);
-    if(diff > 0){
-      document.getElementById("cd-days").textContent  = Math.floor(diff/86400);
-      document.getElementById("cd-hours").textContent = pad(Math.floor(diff%86400/3600));
-      document.getElementById("cd-mins").textContent  = pad(Math.floor(diff%3600/60));
-      document.getElementById("cd-secs").textContent  = pad(diff%60);
+    var title = document.getElementById("cd-title");
+    var msg = document.getElementById("cd-msg");
+    var mode = diff > 0 ? "before" : "after";
+
+    if(mode !== cdMode){              // 切换时更新标题与封面日期行
+      cdMode = mode;
+      if(title) title.textContent = (mode === "before")
+        ? "距离我们的婚礼还有" : "我们已携手相伴";
+      var hd = document.getElementById("heroDate");
+      if(hd) hd.innerHTML = (mode === "before")
+        ? "婚期 · <b>2026 / 10 / 04 · 11:58</b>"
+        : "结婚纪念日 · <b>2026 / 10 / 04</b>";
+    }
+
+    if(mode === "before"){
+      fillCells(diff);               // 婚礼前：倒数
+      if(msg) msg.textContent = "";
     } else {
-      var cd = document.getElementById("countdown");
-      if(cd) cd.style.display = "none";
-      var days = Math.floor((new Date() - WEDDING)/86400000);
-      document.getElementById("cd-msg").textContent =
-        days <= 0 ? "今天，是我们的大喜之日 ❤" : "我们已携手相伴 " + days + " 天 ❤";
+      var up = Math.floor((new Date() - WEDDING)/1000);
+      fillCells(up);                 // 婚礼后：正数「已经结婚多久」
+      if(msg) msg.textContent = (up < 86400)
+        ? "今天，是我们的大喜之日 ❤"
+        : "愿往后岁月漫漫，依旧如初 ❤";
     }
   }
 
@@ -796,6 +1013,121 @@
     els.forEach(function(el){ io.observe(el); });
   }
 
+  // ===== 悬浮音乐播放器（自动识别 musics/ 下音频，列表循环 + 自动播放） =====
+  // 不写死文件名：歌单来自 musics/playlist.json（由 _build.py 扫描生成）；
+  // 本地预览时若没有 playlist.json，会自动解析目录列表作为兜底。
+  function initPlayer(){
+    var wrap = document.getElementById("player");
+    var disc = document.getElementById("playerDisc");
+    var icon = document.getElementById("playerIcon");
+    var tip  = document.getElementById("playerTip");
+    if(!wrap || !disc) return;
+
+    var AUDIO_RE = /\.(mp3|m4a|aac|ogg|oga|wav|flac)$/i;
+    var audio = new Audio();
+    audio.preload = "auto";
+    var list = [], idx = 0, started = false, errStreak = 0;
+
+    function stem(p){ return decodeURIComponent(p.split("/").pop()).replace(/\.[^.]+$/, ""); }
+    function reflect(){
+      var on = !audio.paused && !audio.ended && list.length > 0;
+      wrap.classList.toggle("playing", on);
+      icon.textContent = on ? "❚❚" : (list.length ? "►" : "♪");
+      wrap.setAttribute("aria-label", on ? "暂停音乐" : "播放音乐");
+    }
+    function flash(ms){
+      tip.classList.add("show");
+      clearTimeout(flash._t);
+      flash._t = setTimeout(function(){ tip.classList.remove("show"); }, ms || 3000);
+    }
+    function load(i){
+      if(!list.length) return;
+      idx = (i + list.length) % list.length;
+      audio.src = list[idx].src;
+      tip.textContent = list[idx].title;
+    }
+    function play(){
+      var p = audio.play();
+      if(p && p.then){ p.then(function(){ started = true; }).catch(function(){}); }
+    }
+
+    audio.addEventListener("play", reflect);
+    audio.addEventListener("playing", function(){ errStreak = 0; reflect(); });
+    audio.addEventListener("pause", reflect);
+    audio.addEventListener("ended", function(){ load(idx + 1); play(); });   // 列表循环
+    audio.addEventListener("error", function(){
+      if(!list.length) return;
+      errStreak++;
+      if(errStreak >= list.length){            // 整张歌单都放不出来才停下
+        wrap.classList.remove("playing");
+        icon.textContent = "♪";
+        tip.textContent = "musics/ 里没有可播放的音频";
+        flash(6000);
+        return;
+      }
+      load(idx + 1);                           // 跳过坏的，自动下一首
+      if(started) play();
+    });
+
+    disc.addEventListener("click", function(){
+      started = true;
+      if(!list.length){ flash(3500); return; }
+      if(audio.paused){ play(); flash(2600); } else { audio.pause(); }
+    });
+
+    function begin(){
+      reflect();
+      if(!list.length){
+        icon.textContent = "♪";
+        tip.textContent = "把 mp3 放进 musics/，再运行 python _build.py";
+        return;
+      }
+      load(0);
+      // 自动播放：先直接尝试；被浏览器拦截则在首次真实交互（点击/触摸/按键）时启动
+      function arm(){
+        var evs = ["pointerdown","touchstart","keydown"];
+        function kick(){
+          if(started) return cleanup();
+          var p = audio.play();
+          if(p && p.then){ p.then(function(){ started = true; flash(3000); cleanup(); }).catch(function(){}); }
+        }
+        function cleanup(){ evs.forEach(function(e){ window.removeEventListener(e, kick, true); }); }
+        evs.forEach(function(e){ window.addEventListener(e, kick, true); });
+      }
+      var p0 = audio.play();
+      if(p0 && p0.then){ p0.then(function(){ started = true; flash(3500); }).catch(arm); }
+      else { arm(); }
+    }
+
+    // 读取歌单：优先 musics/playlist.json，其次解析目录自动索引（本地兜底）
+    function fromJson(){
+      return fetch("musics/playlist.json", { cache:"no-cache" })
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(arr){
+          return (arr || []).map(function(it){
+            return (typeof it === "string")
+              ? { src: it, title: stem(it) }
+              : { src: it.src, title: it.title || stem(it.src) };
+          }).filter(function(x){ return x.src; });
+        });
+    }
+    function fromIndex(){
+      return fetch("musics/").then(function(r){ return r.text(); }).then(function(html){
+        var out = [], re = /href="([^"]+)"/gi, m;
+        while((m = re.exec(html))){
+          if(AUDIO_RE.test(m[1])){
+            var src = /musics\//.test(m[1]) ? m[1] : ("musics/" + m[1].replace(/^\.?\//, ""));
+            out.push({ src: src, title: stem(src) });
+          }
+        }
+        return out;
+      }).catch(function(){ return []; });
+    }
+    fromJson().catch(function(){ return []; })
+      .then(function(l){ return (l && l.length) ? l : fromIndex(); })
+      .then(function(l){ list = l || []; begin(); });
+  }
+
   // ===== 初始化 =====
   renderPairs();
   renderGallery("hanfuGrid", HANFU, "hanfu", "红妆华裳");
@@ -803,6 +1135,7 @@
   renderGallery("sceneGrid", SCENE, "scene", "光阴诗篇");
   renderCert();
   initReveal();
+  initPlayer();
   tick();
   setInterval(tick, 1000);
 
